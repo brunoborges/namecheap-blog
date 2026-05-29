@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Microsoft Word lock/owner files
+~$*.docx
+
+# Local blog draft source (not part of the published site)
+namecheapblog.docx
