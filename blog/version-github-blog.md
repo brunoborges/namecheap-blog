@@ -1,4 +1,4 @@
-# How to put a GitHub Pages site on a custom domain in 14 minutes, without touching DNS
+# Add a custom domain to GitHub Pages with GitHub Copilot CLI
 
 Custom domains make a project feel real. But for many developers, the last mile, DNS, is also the most frustrating: `A` records, `CNAME` entries, TTLs, and that long wait where you're never quite sure if the internet is broken or you are.
 
