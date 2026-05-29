@@ -1,0 +1,47 @@
+name: Build blog
+
+# Regenerate the published index.html whenever the blog source changes.
+on:
+  push:
+    branches: [main]
+    paths:
+      - blog/README.md
+      - blog/template.html
+      - blog/build.sh
+      - .github/workflows/build-blog.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Avoid overlapping builds racing to push index.html.
+concurrency:
+  group: build-blog
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends pandoc
+
+      - name: Build index.html from blog/README.md
+        run: ./blog/build.sh
+
+      - name: Commit regenerated index.html
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "index.html is already up to date; nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Regenerate index.html from blog/README.md"
+          git push
