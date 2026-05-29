@@ -4,11 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>How to put a GitHub Pages site on a custom domain in 14
-minutes—without touching DNS</title>
-    <meta name="description" content="Custom domains make a project feel
-real. But for many developers, the last mile—DNS—is also the most
-frustrating: `A` records, `CNAME` entries, TTLs, and that long wait
-where you're never quite sure if the internet is broken or you are.">
+minutes, without touching DNS</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -99,17 +95,17 @@ where you're never quite sure if the internet is broken or you are.">
   <body>
     <main>
 <h1
-id="how-to-put-a-github-pages-site-on-a-custom-domain-in-14-minuteswithout-touching-dns">How
-to put a GitHub Pages site on a custom domain in 14 minutes—without
+id="how-to-put-a-github-pages-site-on-a-custom-domain-in-14-minutes-without-touching-dns">How
+to put a GitHub Pages site on a custom domain in 14 minutes, without
 touching DNS</h1>
 <p>Custom domains make a project feel real. But for many developers, the
-last mile—DNS—is also the most frustrating: <code>A</code> records,
+last mile, DNS, is also the most frustrating: <code>A</code> records,
 <code>CNAME</code> entries, TTLs, and that long wait where you're never
 quite sure if the internet is broken or you are.</p>
 <p>In this post, I'll walk through how I took a project from an empty
 repository to a live website on a custom domain, secured with HTTPS, in
-about 14 minutes—without manually editing a single DNS record. The trick
-is to let <a href="https://docs.github.com/copilot">GitHub Copilot
+about 14 minutes, without manually editing a single DNS record. The
+trick is to let <a href="https://docs.github.com/copilot">GitHub Copilot
 CLI</a> drive the work, with a community <a
 href="https://github.com/brunoborges/namecheap-skill">Namecheap
 skill</a> handling the DNS automation through the registrar's API.</p>
@@ -128,7 +124,7 @@ Pages</a></li>
 <li>GitHub Copilot CLI, installed and authenticated</li>
 <li>A Namecheap account, for buying the domain and using its API</li>
 </ul>
-<p>No prior DNS expertise required—that's the whole point.</p>
+<p>No prior DNS expertise required. That's the whole point.</p>
 <h2 id="step-1-publish-a-site-with-github-pages">Step 1: Publish a site
 with GitHub Pages</h2>
 <p>Every deployment needs something to deploy, so start with a home for
@@ -144,7 +140,7 @@ and let it create the landing page and enable GitHub Pages for you.</p>
 <p><img src="images/media/copilot-create-landing-page-enable-pages.png"
 alt="GitHub Copilot CLI creating a landing page and enabling GitHub Pages" /></p>
 <p>The site is now live on a <code>github.io</code> URL. That's a solid
-start—now let's give it a proper address.</p>
+start. Now let's give it a proper address.</p>
 <h2 id="step-2-register-an-inexpensive-domain">Step 2: Register an
 inexpensive domain</h2>
 <p>You don't need a premium <code>.com</code> to ship a side project.
@@ -156,7 +152,7 @@ alt="Searching for an available .click domain on Namecheap" /></p>
 checkout.</p>
 <p><img src="images/media/confirm-domain-purchase.png"
 alt="Confirming the .click domain purchase" /></p>
-<p>The total came to <strong>USD $2.00</strong>—about <strong>CAD
+<p>The total came to <strong>USD $2.00</strong>, or about <strong>CAD
 $2.46</strong>. That's a low-risk price for trying a custom domain on a
 side project.</p>
 <h2 id="step-3-connect-the-domain-to-github-pages">Step 3: Connect the
@@ -178,8 +174,8 @@ settings page</a> (note that this URL may change over time).</p>
 <li>Toggle the API to <strong>ON</strong>.</li>
 <li>Add the public IP of the machine that will call the API to the
 <strong>Whitelisted IPs</strong> list.</li>
-<li>Copy the <strong>API Key</strong> and store it somewhere safe—you'll
-need it shortly.</li>
+<li>Copy the <strong>API Key</strong> and store it somewhere safe.
+You'll need it shortly.</li>
 </ol>
 <p><img src="images/media/namecheap-api-access-settings.png"
 alt="The Namecheap API access page showing the ON toggle, whitelisted IPs, and API key" /></p>
@@ -203,8 +199,8 @@ alt="GitHub Copilot CLI prompting for the Namecheap API username" /></p>
 <p><img src="images/media/copilot-prompt-api-key.png"
 alt="GitHub Copilot CLI prompting for the Namecheap API key" /></p>
 <p>With credentials in place, Copilot returns the list of domains in
-your account—a quick way to confirm everything is wired up correctly
-before making any changes.</p>
+your account. It's a quick way to confirm everything is wired up
+correctly before making any changes.</p>
 <p><img src="images/media/copilot-list-domains.png"
 alt="GitHub Copilot CLI listing the domains in the Namecheap account" /></p>
 <h3 id="point-the-domain-at-github-pages">Point the domain at GitHub
@@ -219,8 +215,8 @@ the change before touching any records.</p>
 alt="The Namecheap skill requesting confirmation before changing DNS" /></p>
 <p>Once you approve, it replaces the existing parking records with the
 GitHub Pages <code>A</code> records and a <code>CNAME</code> for the
-<code>www</code> subdomain—the exact configuration GitHub Pages expects.
-This matches GitHub's documented steps for <a
+<code>www</code> subdomain, which is the exact configuration GitHub
+Pages expects. This matches GitHub's documented steps for <a
 href="https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site">configuring
 a custom domain for your GitHub Pages site</a>.</p>
 <p><img src="images/media/skill-set-dns-records.png"
@@ -245,7 +241,7 @@ Copilot CLI session is available as a gist</a>.</p>
 EDT</strong>.</p>
 <p><img src="images/media/domain-purchase-timestamp.png"
 alt="The domain purchase confirmation timestamp" /></p>
-<p>The site was live on the custom domain—served over HTTPS—at around
+<p>The site was live on the custom domain, served over HTTPS, at around
 <strong>11:35 AM EDT</strong>. That's roughly <strong>14
 minutes</strong> from owning nothing to a fully deployed site, including
 API setup, skill installation, DNS configuration, propagation, and
@@ -253,7 +249,7 @@ verification.</p>
 <p><img src="images/media/live-site-custom-domain.png"
 alt="The live website served over the custom domain" /></p>
 <h2 id="wrapping-up">Wrapping up</h2>
-<p>DNS isn't hard, exactly—but it's fiddly, easy to get wrong, and slow
+<p>DNS isn't hard, exactly, but it's fiddly, easy to get wrong, and slow
 to give feedback. By pairing GitHub Pages with GitHub Copilot CLI and
 the Namecheap skill, the repetitive parts of a custom-domain deployment
 fade into a short conversation: you make the decisions and approve the
