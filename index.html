@@ -116,14 +116,14 @@ hand. Let's go!</p>
 Build the site and publish it with GitHub Pages</h2>
 <p>Every story needs something worth sharing, so let's start there.</p>
 <p>First, a public repository:</p>
-<p><img src="blog/images/media/image8.png"
+<p><img src="blog/images/media/create-github-repo.png"
 alt="Creating a new public GitHub repository" /></p>
-<p><img src="blog/images/media/image9.png"
+<p><img src="blog/images/media/new-repository.png"
 alt="The newly created repository" /></p>
 <p>Then I just <em>asked</em> Copilot to create a landing page and turn
 on GitHub Pages. No clicking through settings menus — I described what I
 wanted, and it did the work:</p>
-<p><img src="blog/images/media/image10.png"
+<p><img src="blog/images/media/copilot-create-landing-page-enable-pages.png"
 alt="Copilot creating a landing page and enabling GitHub Pages" /></p>
 <p>And just like that, the site is live on a <code>github.io</code> URL.
 Great start — but a little plain. Let's give it a proper address.</p>
@@ -131,9 +131,9 @@ Great start — but a little plain. Let's give it a proper address.</p>
 domain</h2>
 <p>For this blog I grabbed one of the cheapest TLDs out there:
 <code>.click</code>.</p>
-<p><img src="blog/images/media/image6.png"
+<p><img src="blog/images/media/search-click-domain.png"
 alt="Searching for an available .click domain" /></p>
-<p><img src="blog/images/media/image7.png"
+<p><img src="blog/images/media/confirm-domain-purchase.png"
 alt="Confirming the .click domain purchase" /></p>
 <p>Final damage? <strong>USD $2.00</strong> — about CAD $2.46. Two
 bucks. For a real domain. I'll take it.</p>
@@ -146,7 +146,7 @@ its keep.</p>
 Tools</strong>, scroll all the way down to <strong>Business &amp; Dev
 Tools</strong>, and click <strong>Manage</strong> under <em>Namecheap
 API Access</em>.</p>
-<p><img src="blog/images/media/image1.png"
+<p><img src="blog/images/media/namecheap-business-dev-tools.png"
 alt="Namecheap Business &amp; Dev Tools section with the Namecheap API Access option" /></p>
 <p>Shortcut for the impatient (that's me): log in and go straight to <a
 href="https://ap.www.namecheap.com/settings/tools/apiaccess/">https://ap.www.namecheap.com/settings/tools/apiaccess/</a>
@@ -159,7 +159,7 @@ href="https://ap.www.namecheap.com/settings/tools/apiaccess/">https://ap.www.nam
 <li>Copy that <strong>API Key</strong> and stash it somewhere safe.
 You'll want it in a minute.</li>
 </ol>
-<p><img src="blog/images/media/image2.png"
+<p><img src="blog/images/media/namecheap-api-access-settings.png"
 alt="Namecheap API access page showing the ON toggle, whitelisted IPs, and API key" /></p>
 <p>That's it — Namecheap is now scriptable.</p>
 <h3 id="install-the-namecheap-skill">Install the Namecheap skill</h3>
@@ -172,55 +172,55 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="
 <p>The first time you ask Copilot something like <em>"list my Namecheap
 domains"</em>, it checks that the skill is wired up. On that first run,
 it'll ask for your username:</p>
-<p><img src="blog/images/media/image3.png"
+<p><img src="blog/images/media/copilot-prompt-username.png"
 alt="Copilot CLI prompting for the Namecheap API username" /></p>
 <p>Type it in. Then it asks for the API key (told you you'd need
 it):</p>
-<p><img src="blog/images/media/image4.png"
+<p><img src="blog/images/media/copilot-prompt-api-key.png"
 alt="Copilot CLI prompting for the Namecheap API key" /></p>
 <p>And boom — Copilot hands back the list of domains in your
 account:</p>
-<p><img src="blog/images/media/image5.png"
+<p><img src="blog/images/media/copilot-list-domains.png"
 alt="Copilot CLI listing the domains in the Namecheap account" /></p>
 <p>Easy peasy. 🎉</p>
 <h3 id="point-the-domain-at-github-pages">Point the domain at GitHub
 Pages</h3>
 <p>Now the moment of truth — connecting that fresh domain to the
 site:</p>
-<p><img src="blog/images/media/image11.png"
+<p><img src="blog/images/media/copilot-configure-custom-domain.png"
 alt="Asking Copilot to configure the custom domain via the Namecheap skill" /></p>
 <p>It'll check in with a question or two before changing anything (good
 — I like an assistant that asks before it rewrites my DNS):</p>
-<p><img src="blog/images/media/image12.png"
+<p><img src="blog/images/media/skill-dns-confirmation-prompt.png"
 alt="The Namecheap skill asking a confirmation question before changing DNS" /></p>
 <p>And then it does the heavy lifting — swapping the parking records for
 GitHub Pages' <code>A</code> records and the <code>www</code>
 <code>CNAME</code>. This is the exact part I usually dread, and I just…
 watched it happen:</p>
-<p><img src="blog/images/media/image13.png"
+<p><img src="blog/images/media/skill-set-dns-records.png"
 alt="The skill replacing DNS records with GitHub Pages A records and a CNAME" /></p>
 <p>It even handled the repo side, adding a <code>CNAME</code> file with
 the custom domain:</p>
-<p><img src="blog/images/media/image14.png"
+<p><img src="blog/images/media/copilot-commit-cname-file.png"
 alt="Copilot committing the CNAME file with the custom domain" /></p>
 <h2 id="step-4-did-it-actually-work-lets-verify">Step 4: Did it actually
 work? Let's verify</h2>
 <p>Of course, Copilot doesn't just claim victory — it checks. It
 confirmed the domain resolves:</p>
-<p><img src="blog/images/media/image15.png"
+<p><img src="blog/images/media/copilot-verify-dns-resolution.png"
 alt="Copilot verifying DNS resolution for the custom domain" /></p>
 <p>…and that the site returns a healthy HTTP 200:</p>
-<p><img src="blog/images/media/image16.png"
+<p><img src="blog/images/media/copilot-verify-http-200.png"
 alt="Copilot confirming the custom domain returns HTTP 200" /></p>
 <p>Want the receipts? The entire Copilot CLI session is right here: <a
 href="https://gist.github.com/brunoborges/167c988a0c4c16b8ccffca995ae98ce2">https://gist.github.com/brunoborges/167c988a0c4c16b8ccffca995ae98ce2</a></p>
 <p>I bought the domain at <strong>11:21:27 AM EDT</strong>.</p>
-<p><img src="blog/images/media/image17.png"
+<p><img src="blog/images/media/domain-purchase-timestamp.png"
 alt="Domain purchase confirmation timestamp" /></p>
 <p>And the site was live at around <strong>11:35 AM EDT</strong>. Do the
 math — that's roughly <strong>14 minutes</strong> from "I own nothing"
 to "it's on the internet with HTTPS." 🚀</p>
-<p><img src="blog/images/media/image18.png"
+<p><img src="blog/images/media/live-site-custom-domain.png"
 alt="The live website served over the custom domain" /></p>
 <h2 id="so-was-it-worth-it">So, was it worth it?</h2>
 <p>Honestly? Yeah. Building a GitHub Pages site, buying a domain, and
