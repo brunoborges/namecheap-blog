@@ -3,120 +3,235 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GitHub Pages and Custom Domains</title>
-    <meta
-      name="description"
-      content="A small landing page with links to GitHub Pages and custom domain documentation."
-    >
+    <title>From Zero to a Live Site on a Custom Domain — Without
+Touching DNS</title>
+    <meta name="description" content="Let me tell you about my favorite
+kind of afternoon project: the one that *should* be a pain, but isn't.">
     <style>
       :root {
         color-scheme: light dark;
         --background: #0d1117;
-        --foreground: #f0f6fc;
-        --muted: #8b949e;
+        --foreground: #e6edf3;
+        --muted: #9aa7b2;
         --accent: #2f81f7;
         --card: #161b22;
         --border: #30363d;
+        --code-bg: #0b0f14;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
-        min-height: 100vh;
         margin: 0;
-        display: grid;
-        place-items: center;
-        padding: 2rem;
+        padding: 2rem 1rem 4rem;
         background:
-          radial-gradient(circle at top left, rgba(47, 129, 247, 0.25), transparent 28rem),
+          radial-gradient(circle at top left, rgba(47, 129, 247, 0.18), transparent 32rem),
           var(--background);
         color: var(--foreground);
-        font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font: 17px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       }
 
       main {
-        width: min(100%, 720px);
-        padding: clamp(2rem, 6vw, 4rem);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        background: color-mix(in srgb, var(--card) 92%, transparent);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+        width: min(100%, 820px);
+        margin: 0 auto;
       }
 
-      p {
-        color: var(--muted);
-        font-size: 1.125rem;
+      h1, h2, h3 { line-height: 1.25; letter-spacing: -0.02em; }
+      h1 { font-size: clamp(2rem, 5vw, 2.75rem); margin: 0 0 1.5rem; }
+      h2 {
+        font-size: 1.5rem;
+        margin: 2.75rem 0 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
       }
+      h3 { font-size: 1.2rem; margin: 2rem 0 0.75rem; }
 
-      h1 {
-        margin: 0;
-        font-size: clamp(2.5rem, 9vw, 5rem);
-        line-height: 0.95;
-        letter-spacing: -0.06em;
-      }
+      p { margin: 1rem 0; }
 
-      ul {
-        display: grid;
-        gap: 0.75rem;
-        margin: 2rem 0 0;
-        padding: 0;
-        list-style: none;
-      }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover, a:focus-visible { text-decoration: underline; }
 
-      a {
+      ol, ul { padding-left: 1.5rem; }
+      li { margin: 0.35rem 0; }
+
+      img {
         display: block;
-        padding: 1rem 1.125rem;
+        max-width: 100%;
+        height: auto;
+        margin: 1.5rem auto;
         border: 1px solid var(--border);
-        border-radius: 14px;
-        color: var(--foreground);
-        text-decoration: none;
-        transition: border-color 160ms ease, transform 160ms ease;
+        border-radius: 12px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
       }
 
-      a:hover,
-      a:focus-visible {
-        border-color: var(--accent);
-        transform: translateY(-2px);
-        outline: none;
+      code {
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 0.9em;
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.15em 0.4em;
       }
 
-      span {
-        display: block;
+      pre {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        overflow-x: auto;
+      }
+
+      pre code { background: none; border: none; padding: 0; }
+
+      strong { color: #f0f6fc; }
+
+      footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.9rem;
       }
     </style>
   </head>
   <body>
     <main>
-      <h1>GitHub Pages and Custom Domains</h1>
-      <p>
-        A compact landing page for collecting references about publishing sites
-        with GitHub Pages and connecting them to custom domains.
-      </p>
-
-      <ul>
-        <li>
-          <a href="https://docs.github.com/en/pages" rel="noreferrer">
-            GitHub Pages documentation
-            <span>Start here for setup, publishing sources, and site types.</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site" rel="noreferrer">
-            Configuring a custom domain
-            <span>Learn how to add, verify, and secure a domain for a Pages site.</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" rel="noreferrer">
-            About GitHub Pages
-            <span>Understand what GitHub Pages supports and how publishing works.</span>
-          </a>
-        </li>
-      </ul>
+<h1
+id="from-zero-to-a-live-site-on-a-custom-domain--without-touching-dns">From
+Zero to a Live Site on a Custom Domain — Without Touching DNS</h1>
+<p>Let me tell you about my favorite kind of afternoon project: the one
+that <em>should</em> be a pain, but isn't.</p>
+<p>The story goes like this. I built a little website, published it, and
+then thought, "you know what this deserves? A real domain." Normally
+that's where the fun ends and the DNS headache begins — <code>A</code>
+records, <code>CNAME</code> entries, TTLs, the whole rabbit hole. It's a
+lot, especially if you don't dream in DNS.</p>
+<p>So I did the lazy-genius thing: I let an AI assistant do the DNS work
+for me.</p>
+<p>Here's the plan: stand up a site on GitHub Pages, buy a dirt-cheap
+domain, and then wire the two together using GitHub Copilot CLI and a
+Namecheap skill. The best part? I never touched a single DNS record by
+hand. Let's go!</p>
+<h2 id="step-1-build-the-site-and-publish-it-with-github-pages">Step 1:
+Build the site and publish it with GitHub Pages</h2>
+<p>Every story needs something worth sharing, so let's start there.</p>
+<p>First, a public repository:</p>
+<p><img src="blog/images/media/image8.png"
+alt="Creating a new public GitHub repository" /></p>
+<p><img src="blog/images/media/image9.png"
+alt="The newly created repository" /></p>
+<p>Then I just <em>asked</em> Copilot to create a landing page and turn
+on GitHub Pages. No clicking through settings menus — I described what I
+wanted, and it did the work:</p>
+<p><img src="blog/images/media/image10.png"
+alt="Copilot creating a landing page and enabling GitHub Pages" /></p>
+<p>And just like that, the site is live on a <code>github.io</code> URL.
+Great start — but a little plain. Let's give it a proper address.</p>
+<h2 id="step-2-buy-a-very-cheap-domain">Step 2: Buy a (very) cheap
+domain</h2>
+<p>For this blog I grabbed one of the cheapest TLDs out there:
+<code>.click</code>.</p>
+<p><img src="blog/images/media/image6.png"
+alt="Searching for an available .click domain" /></p>
+<p><img src="blog/images/media/image7.png"
+alt="Confirming the .click domain purchase" /></p>
+<p>Final damage? <strong>USD $2.00</strong> — about CAD $2.46. Two
+bucks. For a real domain. I'll take it.</p>
+<p>Now I own a domain and I have a site. Time to introduce them.</p>
+<h2 id="step-3-wire-it-up">Step 3: Wire it up</h2>
+<p>This is the part I usually dread. Here's where the AI assistant earns
+its keep.</p>
+<h3 id="flip-on-namecheap-api-access">Flip on Namecheap API access</h3>
+<p>First, we need to let Namecheap's API in. Head to <strong>Profile →
+Tools</strong>, scroll all the way down to <strong>Business &amp; Dev
+Tools</strong>, and click <strong>Manage</strong> under <em>Namecheap
+API Access</em>.</p>
+<p><img src="blog/images/media/image1.png"
+alt="Namecheap Business &amp; Dev Tools section with the Namecheap API Access option" /></p>
+<p>Shortcut for the impatient (that's me): log in and go straight to <a
+href="https://ap.www.namecheap.com/settings/tools/apiaccess/">https://ap.www.namecheap.com/settings/tools/apiaccess/</a>
+(heads up — this URL may change down the road).</p>
+<p>On that page, three quick things:</p>
+<ol type="1">
+<li>Toggle the API to <strong>ON</strong>.</li>
+<li>Add the public IP of the machine that'll talk to the API to the
+<strong>Whitelisted IPs</strong> list.</li>
+<li>Copy that <strong>API Key</strong> and stash it somewhere safe.
+You'll want it in a minute.</li>
+</ol>
+<p><img src="blog/images/media/image2.png"
+alt="Namecheap API access page showing the ON toggle, whitelisted IPs, and API key" /></p>
+<p>That's it — Namecheap is now scriptable.</p>
+<h3 id="install-the-namecheap-skill">Install the Namecheap skill</h3>
+<p>Now let's give our AI assistant superpowers. Enable the <a
+href="https://github.com/brunoborges/namecheap-skill">Namecheap
+skill</a>.</p>
+<p>On a machine running GitHub Copilot CLI, it's a one-liner:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> skill install brunoborges/namecheap-skill namecheap-dns <span class="at">--scope</span> user</span></code></pre></div>
+<p>The first time you ask Copilot something like <em>"list my Namecheap
+domains"</em>, it checks that the skill is wired up. On that first run,
+it'll ask for your username:</p>
+<p><img src="blog/images/media/image3.png"
+alt="Copilot CLI prompting for the Namecheap API username" /></p>
+<p>Type it in. Then it asks for the API key (told you you'd need
+it):</p>
+<p><img src="blog/images/media/image4.png"
+alt="Copilot CLI prompting for the Namecheap API key" /></p>
+<p>And boom — Copilot hands back the list of domains in your
+account:</p>
+<p><img src="blog/images/media/image5.png"
+alt="Copilot CLI listing the domains in the Namecheap account" /></p>
+<p>Easy peasy. 🎉</p>
+<h3 id="point-the-domain-at-github-pages">Point the domain at GitHub
+Pages</h3>
+<p>Now the moment of truth — connecting that fresh domain to the
+site:</p>
+<p><img src="blog/images/media/image11.png"
+alt="Asking Copilot to configure the custom domain via the Namecheap skill" /></p>
+<p>It'll check in with a question or two before changing anything (good
+— I like an assistant that asks before it rewrites my DNS):</p>
+<p><img src="blog/images/media/image12.png"
+alt="The Namecheap skill asking a confirmation question before changing DNS" /></p>
+<p>And then it does the heavy lifting — swapping the parking records for
+GitHub Pages' <code>A</code> records and the <code>www</code>
+<code>CNAME</code>. This is the exact part I usually dread, and I just…
+watched it happen:</p>
+<p><img src="blog/images/media/image13.png"
+alt="The skill replacing DNS records with GitHub Pages A records and a CNAME" /></p>
+<p>It even handled the repo side, adding a <code>CNAME</code> file with
+the custom domain:</p>
+<p><img src="blog/images/media/image14.png"
+alt="Copilot committing the CNAME file with the custom domain" /></p>
+<h2 id="step-4-did-it-actually-work-lets-verify">Step 4: Did it actually
+work? Let's verify</h2>
+<p>Of course, Copilot doesn't just claim victory — it checks. It
+confirmed the domain resolves:</p>
+<p><img src="blog/images/media/image15.png"
+alt="Copilot verifying DNS resolution for the custom domain" /></p>
+<p>…and that the site returns a healthy HTTP 200:</p>
+<p><img src="blog/images/media/image16.png"
+alt="Copilot confirming the custom domain returns HTTP 200" /></p>
+<p>Want the receipts? The entire Copilot CLI session is right here: <a
+href="https://gist.github.com/brunoborges/167c988a0c4c16b8ccffca995ae98ce2">https://gist.github.com/brunoborges/167c988a0c4c16b8ccffca995ae98ce2</a></p>
+<p>I bought the domain at <strong>11:21:27 AM EDT</strong>.</p>
+<p><img src="blog/images/media/image17.png"
+alt="Domain purchase confirmation timestamp" /></p>
+<p>And the site was live at around <strong>11:35 AM EDT</strong>. Do the
+math — that's roughly <strong>14 minutes</strong> from "I own nothing"
+to "it's on the internet with HTTPS." 🚀</p>
+<p><img src="blog/images/media/image18.png"
+alt="The live website served over the custom domain" /></p>
+<h2 id="so-was-it-worth-it">So, was it worth it?</h2>
+<p>Honestly? Yeah. Building a GitHub Pages site, buying a domain, and
+wiring up a custom domain with HTTPS — start to finish in about 14
+minutes, and I didn't touch a single DNS record myself. The combo of
+GitHub Copilot CLI and the Namecheap skill turned a classically fiddly
+chore into a quick conversation.</p>
+<p>Give it a shot, and let me know how it goes! 🇧🇷</p>
+      <footer>
+        <p>Rendered from <code>blog/README.md</code>. The Markdown file is the source of truth.</p>
+      </footer>
     </main>
   </body>
 </html>

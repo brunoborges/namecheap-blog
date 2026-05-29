@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 #
-# Build the blog HTML from its Markdown source.
+# Build the published site from the blog's Markdown source.
 #
-# The Markdown file (README.md) is the single source of truth; this script
-# regenerates index.html from it. Re-run after editing README.md.
+# blog/README.md is the single source of truth. This script renders it to the
+# repository's root index.html, which is what GitHub Pages serves at
+# ghpagesblog.click. Re-run after editing README.md.
 #
 # Usage: ./build.sh
 set -euo pipefail
@@ -12,8 +13,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 cd "$SCRIPT_DIR"
 
+# Repository root (one level up from blog/), where the published site lives.
+REPO_ROOT="$(cd -- ".." >/dev/null 2>&1 && pwd)"
+
 SRC="README.md"
-OUT="index.html"
+OUT="$REPO_ROOT/index.html"
 TEMPLATE="template.html"
 
 if ! command -v pandoc >/dev/null 2>&1; then
@@ -42,7 +46,7 @@ DESCRIPTION="$(awk '
   { started = 1; printf "%s ", $0 }
 ' "$SRC" | sed 's/[[:space:]]*$//')"
 
-echo "Building $OUT from $SRC ..."
+echo "Building $OUT from blog/$SRC ..."
 pandoc "$SRC" \
   --from gfm \
   --to html5 \
@@ -53,4 +57,9 @@ pandoc "$SRC" \
   --metadata "lang=en" \
   --output "$OUT"
 
-echo "Wrote $SCRIPT_DIR/$OUT"
+# The Markdown references images relative to blog/ (images/media/...), but the
+# generated page lives at the repository root, so rewrite those paths to point
+# under blog/ where the image files actually live.
+sed 's|src="images/media/|src="blog/images/media/|g' "$OUT" > "$OUT.tmp" && mv "$OUT.tmp" "$OUT"
+
+echo "Wrote $OUT"
