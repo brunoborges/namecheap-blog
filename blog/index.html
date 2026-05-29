@@ -3,13 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Publishing a Website with GitHub Pages and a Custom Domain —
-Without Touching DNS</title>
-    <meta name="description" content="Namecheap is a popular DNS domain
-registrar. Publishing a website or web app to the internet almost always
-involves registering a domain and configuring it to point to wherever
-the site is hosted. That process can be daunting, especially for less
-tech-savvy users.">
+    <title>From Zero to a Live Site on a Custom Domain — Without
+Touching DNS</title>
+    <meta name="description" content="Let me tell you about my favorite
+kind of afternoon project: the one that *should* be a pain, but isn't.">
     <style>
       :root {
         color-scheme: light dark;
@@ -100,124 +97,138 @@ tech-savvy users.">
   <body>
     <main>
 <h1
-id="publishing-a-website-with-github-pages-and-a-custom-domain--without-touching-dns">Publishing
-a Website with GitHub Pages and a Custom Domain — Without Touching
-DNS</h1>
-<p>Namecheap is a popular DNS domain registrar. Publishing a website or
-web app to the internet almost always involves registering a domain and
-configuring it to point to wherever the site is hosted. That process can
-be daunting, especially for less tech-savvy users.</p>
-<p>The DNS protocol has a handful of basic concepts, but it can quickly
-turn into a rabbit hole. Letting an AI assistant handle the details is a
-real advantage.</p>
-<p>Conveniently, Namecheap offers an <a
+id="from-zero-to-a-live-site-on-a-custom-domain--without-touching-dns">From
+Zero to a Live Site on a Custom Domain — Without Touching DNS</h1>
+<p>Let me tell you about my favorite kind of afternoon project: the one
+that <em>should</em> be a pain, but isn't.</p>
+<p>Here's the deal. Namecheap is a popular domain registrar, and
+publishing a website almost always means registering a domain and
+pointing it at wherever your site lives. Sounds simple. It rarely is —
+especially if you're not the kind of person who dreams in <code>A</code>
+records and <code>CNAME</code> entries. DNS has a few basic concepts,
+sure, but it's a rabbit hole, and once you fall in, you're reading TTL
+docs at midnight wondering where your evening went.</p>
+<p>So I did the lazy-genius thing: I let an AI assistant do the DNS work
+for me.</p>
+<p>Turns out Namecheap has an <a
 href="https://www.namecheap.com/support/api/intro/">API for managing
-domains</a>, which lets you automate tasks — and lets AI assistants do
-the DNS management work for you.</p>
-<p>In this post, I'll buy a cheap domain, stand up a GitHub Pages site,
-and wire the two together using GitHub Copilot CLI and a Namecheap skill
-— without editing a single DNS record by hand.</p>
-<h2 id="step-1-enable-namecheap-api-access">Step 1: Enable Namecheap API
-access</h2>
-<p>Go to <strong>Profile → Tools</strong>, scroll to the bottom under
-<strong>Business &amp; Dev Tools</strong>, and click
-<strong>Manage</strong> under the <em>Namecheap API Access</em>
-subsection.</p>
+domains</a>, which means we can automate the whole thing — and hand it
+off to an AI assistant. In this post I'll buy a dirt-cheap domain, spin
+up a GitHub Pages site, and wire them together with GitHub Copilot CLI
+and a Namecheap skill. The best part? I never touched a single DNS
+record by hand. Let's go!</p>
+<h2 id="step-1-flip-on-namecheap-api-access">Step 1: Flip on Namecheap
+API access</h2>
+<p>First, we need to let Namecheap's API in. Head to <strong>Profile →
+Tools</strong>, scroll all the way down to <strong>Business &amp; Dev
+Tools</strong>, and click <strong>Manage</strong> under <em>Namecheap
+API Access</em>.</p>
 <p><img src="images/media/image1.png"
 alt="Namecheap Business &amp; Dev Tools section with the Namecheap API Access option" /></p>
-<p>A shortcut is to log in and navigate directly to <a
+<p>Shortcut for the impatient (that's me): log in and go straight to <a
 href="https://ap.www.namecheap.com/settings/tools/apiaccess/">https://ap.www.namecheap.com/settings/tools/apiaccess/</a>
-(this URL may change in the future).</p>
-<p>On the API access page:</p>
+(heads up — this URL may change down the road).</p>
+<p>On that page, three quick things:</p>
 <ol type="1">
 <li>Toggle the API to <strong>ON</strong>.</li>
-<li>Add the public IP address of the machine that will connect to the
-API to the list of <strong>Whitelisted IPs</strong>.</li>
-<li>Copy and save the <strong>API Key</strong> somewhere safe for later
-use.</li>
+<li>Add the public IP of the machine that'll talk to the API to the
+<strong>Whitelisted IPs</strong> list.</li>
+<li>Copy that <strong>API Key</strong> and stash it somewhere safe.
+You'll want it in a minute.</li>
 </ol>
 <p><img src="images/media/image2.png"
 alt="Namecheap API access page showing the ON toggle, whitelisted IPs, and API key" /></p>
-<p>With that, we can automate managing domain names in Namecheap.</p>
+<p>That's it — Namecheap is now scriptable.</p>
 <h2 id="step-2-install-the-namecheap-skill">Step 2: Install the
 Namecheap skill</h2>
-<p>To drive Namecheap from an AI assistant, enable the <a
+<p>Now let's give our AI assistant superpowers. Enable the <a
 href="https://github.com/brunoborges/namecheap-skill">Namecheap
 skill</a>.</p>
-<p>To install it on a machine running GitHub Copilot CLI, run:</p>
+<p>On a machine running GitHub Copilot CLI, it's a one-liner:</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> skill install brunoborges/namecheap-skill namecheap-dns <span class="at">--scope</span> user</span></code></pre></div>
-<p>The first time you run a command such as <em>"list my Namecheap
-domains"</em>, Copilot verifies that the skill is configured. On the
-first run, it prompts for your username:</p>
+<p>The first time you ask Copilot something like <em>"list my Namecheap
+domains"</em>, it checks that the skill is wired up. On that first run,
+it'll ask for your username:</p>
 <p><img src="images/media/image3.png"
 alt="Copilot CLI prompting for the Namecheap API username" /></p>
-<p>Type your username. Next, it asks for the API key:</p>
+<p>Type it in. Then it asks for the API key (told you you'd need
+it):</p>
 <p><img src="images/media/image4.png"
 alt="Copilot CLI prompting for the Namecheap API key" /></p>
-<p>Once everything is set, Copilot returns the list of domains in your
+<p>And boom — Copilot hands back the list of domains in your
 account:</p>
 <p><img src="images/media/image5.png"
 alt="Copilot CLI listing the domains in the Namecheap account" /></p>
-<h2 id="step-3-buy-a-new-domain">Step 3: Buy a new domain</h2>
-<p>For this blog, I bought one of the cheapest TLD (top-level domain)
-options: <code>.click</code>.</p>
+<p>Easy peasy. 🎉</p>
+<h2 id="step-3-buy-a-very-cheap-domain">Step 3: Buy a (very) cheap
+domain</h2>
+<p>For this blog I grabbed one of the cheapest TLDs out there:
+<code>.click</code>.</p>
 <p><img src="images/media/image6.png"
 alt="Searching for an available .click domain" /></p>
 <p><img src="images/media/image7.png"
 alt="Confirming the .click domain purchase" /></p>
-<p>In the end, I paid <strong>USD $2.00</strong> (about CAD $2.46).</p>
-<h2 id="step-4-create-a-repository-and-enable-github-pages">Step 4:
-Create a repository and enable GitHub Pages</h2>
-<p>With a domain ready, let's get a website running on GitHub Pages.</p>
-<p>First, create a public repository:</p>
+<p>Final damage? <strong>USD $2.00</strong> — about CAD $2.46. Two
+bucks. For a real domain. I'll take it.</p>
+<h2 id="step-4-stand-up-the-site-on-github-pages">Step 4: Stand up the
+site on GitHub Pages</h2>
+<p>Domain in hand, let's get a website live with GitHub Pages.</p>
+<p>First, a public repository:</p>
 <p><img src="images/media/image8.png"
 alt="Creating a new public GitHub repository" /></p>
 <p><img src="images/media/image9.png"
 alt="The newly created repository" /></p>
-<p>Next, ask Copilot to create a landing page and enable GitHub Pages
-for publishing:</p>
+<p>Then I just <em>asked</em> Copilot to create a landing page and turn
+on GitHub Pages. No clicking through settings menus — I described what I
+wanted, and it did the work:</p>
 <p><img src="images/media/image10.png"
 alt="Copilot creating a landing page and enabling GitHub Pages" /></p>
-<h2 id="step-5-point-the-custom-domain-at-github-pages">Step 5: Point
-the custom domain at GitHub Pages</h2>
-<p>Now it's time to use the Namecheap skill:</p>
+<h2 id="step-5-point-the-domain-at-github-pages--the-fun-part">Step 5:
+Point the domain at GitHub Pages — the fun part</h2>
+<p>Here's where the Namecheap skill earns its keep:</p>
 <p><img src="images/media/image11.png"
 alt="Asking Copilot to configure the custom domain via the Namecheap skill" /></p>
-<p>The skill may ask a few clarifying questions:</p>
+<p>It'll check in with a question or two before changing anything (good
+— I like an assistant that asks before it rewrites my DNS):</p>
 <p><img src="images/media/image12.png"
 alt="The Namecheap skill asking a confirmation question before changing DNS" /></p>
-<p>Then it does the heavy lifting of configuring DNS to point at
-GitHub's IP addresses for a GitHub Pages custom domain:</p>
+<p>And then it does the heavy lifting — swapping the parking records for
+GitHub Pages' <code>A</code> records and the <code>www</code>
+<code>CNAME</code>. This is the exact part I usually dread, and I just…
+watched it happen:</p>
 <p><img src="images/media/image13.png"
 alt="The skill replacing DNS records with GitHub Pages A records and a CNAME" /></p>
-<p>Copilot also handles repository-side details, such as adding a
-<code>CNAME</code> file containing the custom domain:</p>
+<p>It even handled the repo side, adding a <code>CNAME</code> file with
+the custom domain:</p>
 <p><img src="images/media/image14.png"
 alt="Copilot committing the CNAME file with the custom domain" /></p>
-<h2 id="step-6-verify-the-site-is-live">Step 6: Verify the site is
-live</h2>
-<p>Copilot then verifies that the domain resolves and serves the
-site:</p>
+<h2 id="step-6-did-it-actually-work-lets-verify">Step 6: Did it actually
+work? Let's verify</h2>
+<p>Of course, Copilot doesn't just claim victory — it checks. It
+confirmed the domain resolves:</p>
 <p><img src="images/media/image15.png"
 alt="Copilot verifying DNS resolution for the custom domain" /></p>
+<p>…and that the site returns a healthy HTTP 200:</p>
 <p><img src="images/media/image16.png"
 alt="Copilot confirming the custom domain returns HTTP 200" /></p>
-<p>The entire Copilot CLI session is available here: <a
+<p>Want the receipts? The entire Copilot CLI session is right here: <a
 href="https://gist.github.com/brunoborges/167c988a0c4c16b8ccffca995ae98ce2">https://gist.github.com/brunoborges/167c988a0c4c16b8ccffca995ae98ce2</a></p>
-<p>The domain was purchased at <strong>11:21:27 AM EDT</strong>.</p>
+<p>I bought the domain at <strong>11:21:27 AM EDT</strong>.</p>
 <p><img src="images/media/image17.png"
 alt="Domain purchase confirmation timestamp" /></p>
-<p>After everything was set and done, the website was live at around
-<strong>11:35 AM EDT</strong>:</p>
+<p>And the site was live at around <strong>11:35 AM EDT</strong>. Do the
+math — that's roughly <strong>14 minutes</strong> from "I own nothing"
+to "it's on the internet with HTTPS." 🚀</p>
 <p><img src="images/media/image18.png"
 alt="The live website served over the custom domain" /></p>
-<h2 id="conclusion">Conclusion</h2>
-<p>That's how easy it was to configure GitHub Pages with a custom
-domain. From buying the domain to a live HTTPS site took roughly 15
-minutes — and I didn't have to touch any DNS configuration myself. The
-combination of GitHub Copilot CLI and the Namecheap skill turned a
-traditionally fiddly process into a short conversation.</p>
+<h2 id="so-was-it-worth-it">So, was it worth it?</h2>
+<p>Honestly? Yeah. Buying a domain, standing up GitHub Pages, and wiring
+up a custom domain with HTTPS — start to finish in about 14 minutes, and
+I didn't touch a single DNS record myself. The combo of GitHub Copilot
+CLI and the Namecheap skill turned a classically fiddly chore into a
+quick conversation.</p>
+<p>Give it a shot, and let me know how it goes! 🇧🇷</p>
       <footer>
         <p>Rendered from <code>blog/README.md</code>. The Markdown file is the source of truth.</p>
       </footer>
