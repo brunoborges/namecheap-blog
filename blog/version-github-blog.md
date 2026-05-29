@@ -107,6 +107,8 @@ It also handles the repository side, committing a `CNAME` file that tells GitHub
 
 ![GitHub Copilot CLI committing the CNAME file with the custom domain](images/media/copilot-commit-cname-file.png)
 
+> **Not using Namecheap?** The same approach works with any registrar that offers an API. You don't need a purpose-built skill: point Copilot CLI at your registrar's API documentation and ask it to read, understand, and use that API to set the GitHub Pages records for your domain. The registrar changes; the workflow doesn't.
+
 ## Step 4: Verify the deployment
 
 Rather than assuming success, Copilot CLI checks its own work. First, it confirms the domain resolves.
