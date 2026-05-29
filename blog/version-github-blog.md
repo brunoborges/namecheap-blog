@@ -62,10 +62,10 @@ You can also navigate directly to the [API access settings page](https://ap.www.
 On that page, complete three steps:
 
 1. Toggle the API to **ON**.
-2. Add the public IP of the machine that will call the API to the **Whitelisted IPs** list.
+2. Add the public IP of the machine that will call the API to the IP allowlist (Namecheap labels this field **Whitelisted IPs**).
 3. Copy the **API Key** and store it somewhere safe. You'll need it shortly.
 
-![The Namecheap API access page showing the ON toggle, whitelisted IPs, and API key](images/media/namecheap-api-access-settings.png)
+![The Namecheap API access page showing the ON toggle, IP allowlist, and API key](images/media/namecheap-api-access-settings.png)
 
 > For more detail on what the API offers, see [Namecheap's API introduction](https://www.namecheap.com/support/api/intro/).
 
@@ -121,11 +121,11 @@ Then it confirms the site returns a healthy HTTP 200 response.
 
 If you'd like to review every prompt and response, the [full Copilot CLI session is available as a gist](https://gist.github.com/brunoborges/167c988a0c4c16b8ccffca995ae98ce2).
 
-Now for the timeline. The domain was purchased at **11:21:27 AM EDT**.
+Now for the timeline. The domain was purchased at **11:21:27 am ET**.
 
 ![The domain purchase confirmation timestamp](images/media/domain-purchase-timestamp.png)
 
-The site was live on the custom domain, served over HTTPS, at around **11:35 AM EDT**. That's roughly **14 minutes** from owning nothing to a fully deployed site, including API setup, skill installation, DNS configuration, propagation, and verification.
+The site was live on the custom domain, served over HTTPS, at around **11:35 am ET**. That's roughly **14 minutes** from owning nothing to a fully deployed site, including API setup, skill installation, DNS configuration, propagation, and verification.
 
 ![The live website served over the custom domain](images/media/live-site-custom-domain.png)
 
